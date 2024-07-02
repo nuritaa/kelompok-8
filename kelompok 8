@@ -1,0 +1,69 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+class Reservasi {
+public:
+    int id;
+    string namaTamu;
+    string tanggalCheckIn;
+    string tanggalCheckOut;
+    string tipeKamar;
+
+    Reservasi(int id, string namaTamu, string tanggalCheckIn, string tanggalCheckOut, string tipeKamar) {
+        this->id = id;
+        this->namaTamu = namaTamu;
+        this->tanggalCheckIn = tanggalCheckIn;
+        this->tanggalCheckOut = tanggalCheckOut;
+        this->tipeKamar = tipeKamar;
+    }
+
+    void tampilkanReservasi() {
+        cout << "ID: " << id << endl;
+        cout << "Nama Tamu: " << namaTamu << endl;
+        cout << "Tanggal Check-In: " << tanggalCheckIn << endl;
+        cout << "Tanggal Check-Out: " << tanggalCheckOut << endl;
+        cout << "Tipe Kamar: " << tipeKamar << endl;
+    }
+};
+ 
+class Hotel {
+private:
+    vector<Reservasi> daftarReservasi;
+    int idCounter;
+
+public:
+    Hotel() {
+        idCounter = 1;
+    }
+
+    void tambahReservasi(string namaTamu, string tanggalCheckIn, string tanggalCheckOut, string tipeKamar) {
+        Reservasi baru(idCounter++, namaTamu, tanggalCheckIn, tanggalCheckOut, tipeKamar);
+        daftarReservasi.push_back(baru);
+        cout << "Reservasi berhasil ditambahkan!" << endl;
+    }
+
+    void hapusReservasi(int id) {
+        for (auto it = daftarReservasi.begin(); it != daftarReservasi.end(); ++it) {
+            if (it->id == id) {
+                daftarReservasi.erase(it);
+                cout << "Reservasi berhasil dihapus!" << endl;
+                return;
+            }
+        }
+        cout << "Reservasi dengan ID tersebut tidak ditemukan!" << endl;
+    }
+
+    void cariReservasi(string namaTamu) {
+        bool ditemukan = false;
+        for (auto& reservasi : daftarReservasi) {
+            if (reservasi.namaTamu == namaTamu) {
+                reservasi.tampilkanReservasi();
+                ditemukan = true;
+            }
+        }
+        if (!ditemukan) {
+            cout << "Reservasi dengan nama tamu tersebut tidak ditemukan!" << endl;
+        }
+    }
